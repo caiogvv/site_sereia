@@ -916,7 +916,35 @@
     <![endif]-->
 
 
+<script>
+//tn: tracker name
+//tc: tracher code
+//cn: cookie name
+(function(tn, tc, cn) {
+  window[tn] = window[tn] || {
+    status: "loading_code",
+    code: tc,
+    cookieName: cn,
+    queue: [],
+    send: function(a, d){
+      d = d || {};
+      window[tn].queue.push({
+        a: a,
+        d: Object.assign(d, {timestamp: Date.now()})
+      });
+    }
+  };
 
+  if(window[tn].status == "loading_code") {
+    window[tn].status = "waiting_script";
+    var s = document.createElement("script");
+    s.async = true;
+    s.src = "https://script.google.com/macros/s/" + tc + "/dev/library?tn=" + tn;
+    document.body.appendChild(s);
+  }
+})("tracker", "AKfycbx2j5RlkSq3TLAm9TofJE0pepcaE1kYF8ZwXJualAg", "_trackerCk");
+//https://script.google.com/macros/s/AKfycbx2j5RlkSq3TLAm9TofJE0pepcaE1kYF8ZwXJualAg/dev
+</script>
 
 
   <script>
