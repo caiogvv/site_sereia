@@ -2602,6 +2602,48 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     }, Math.random() * 12000 + 5000);
   </script>
 
+
+  <!-- Tag click façaUmOrçamento -->
+  <script>
+    let buttonFacaUmOrcamento = document.querySelector('a.page-scroll.btn.btn-xl');
+
+    buttonFacaUmOrcamento.addEventListener('click', (evt) => {
+      tracker.send('event', {
+        category: 'orçamento',
+        action: 'click',
+        label: 'botão orçamento'
+      }, 
+      { capture: false })
+    });
+  </script>
+
+
+  <!-- Tag formView formEntreEmContato -->
+  <script>
+    window.addEventListener('scroll', viewForm);
+
+    function viewForm() {
+      let sectionForm = document.querySelectorAll('#contact');
+
+      for (let i = 0; i < sectionForm.length; i++) {
+
+        let windowheight = window.innerHeight;
+        let formTop = sectionForm[i].getBoundingClientRect().top;
+        let viewPoint = 500;
+
+        if(formTop < windowheight - viewPoint) {
+          tracker.send('event', {
+            category: 'orçamento',
+            action: 'visualizou form',
+            label: 'formulário' 
+          });
+
+          window.removeEventListener('scroll', viewForm);
+        }
+      }
+    }
+  </script>
+
 </body>
 
 </html>
