@@ -2627,7 +2627,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
       let windowheight = window.innerHeight;
       let formTop = sectionForm.getBoundingClientRect().top;
-      let viewPoint = 500;
+      let viewPoint = windowheight*0.5;
 
       if(formTop < windowheight - viewPoint) {
         tracker.send('event', {
