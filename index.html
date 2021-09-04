@@ -950,7 +950,10 @@
 
 
 //Envio das informações
-  window["tracker"].send("pageview");
+  window["tracker"].send("pageview", {
+    category: 'inicio do fluxo',
+    label: 'chegou na página home'
+  });
 </script>
 
 
@@ -2639,6 +2642,29 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         window.removeEventListener('scroll', viewForm);
       }
       
+    }
+  </script>
+
+
+  <!-- Tag event iniciou preenchimento do form -->
+  <script>
+    window.addEventListener('change', typeInForm);
+
+    function typeInForm() {
+      let form = document.querySelectorAll('.form-group');
+      
+      for (let i = 0; i < form.length; i++) {
+        let formField = form[i]
+
+        if (formField.firstElementChild.value != '') {
+          tracker.send('event', {
+            category: 'orçamento',
+            action: 'digitou em algum campo',
+            label: 'formulário'
+          });
+          window.removeEventListener('change', typeInForm);
+        }
+      }
     }
   </script>
 
