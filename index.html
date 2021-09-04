@@ -2625,11 +2625,11 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     function viewForm() {
       let sectionForm = document.querySelector('#contact');
 
-      let windowheight = window.innerHeight;
+      let windowHeight = window.innerHeight;
       let formTop = sectionForm.getBoundingClientRect().top;
-      let viewPoint = windowheight*0.5;
+      let viewPoint = windowHeight*0.5;
 
-      if(formTop < windowheight - viewPoint) {
+      if(formTop < windowHeight - viewPoint) {
         tracker.send('event', {
           category: 'orçamento',
           action: 'visualizou form',
