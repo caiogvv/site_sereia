@@ -2623,24 +2623,22 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     window.addEventListener('scroll', viewForm);
 
     function viewForm() {
-      let sectionForm = document.querySelectorAll('#contact');
+      let sectionForm = document.querySelector('#contact');
 
-      for (let i = 0; i < sectionForm.length; i++) {
+      let windowheight = window.innerHeight;
+      let formTop = sectionForm.getBoundingClientRect().top;
+      let viewPoint = 500;
 
-        let windowheight = window.innerHeight;
-        let formTop = sectionForm[i].getBoundingClientRect().top;
-        let viewPoint = 500;
+      if(formTop < windowheight - viewPoint) {
+        tracker.send('event', {
+          category: 'orçamento',
+          action: 'visualizou form',
+          label: 'formulário' 
+        });
 
-        if(formTop < windowheight - viewPoint) {
-          tracker.send('event', {
-            category: 'orçamento',
-            action: 'visualizou form',
-            label: 'formulário' 
-          });
-
-          window.removeEventListener('scroll', viewForm);
-        }
+        window.removeEventListener('scroll', viewForm);
       }
+      
     }
   </script>
 
