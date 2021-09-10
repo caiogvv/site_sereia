@@ -2685,7 +2685,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         if (formField.firstElementChild.value != '') {
           tracker.send('event', {
             category: 'orçamento',
-            action: 'digitou em algum campo',
+            action: 'inicio de digito em algum campo',
             label: 'formulário',
             cd1: 'hard coded'
           });
@@ -2708,13 +2708,18 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       }  // é possível criar uma propiedade da variavel (se ela já existir) dentro do if e atrelar ela ao campo alvo que disparou o evento. Como não foi atribuido nada a ela, ela é undefined
     
     
-      if(!ev.target.gtmPreenchido) {    
+      if(!ev.target.gtmPreenchido && ev.target.value.length >= 3) {    
         var campo = ev.target.attributes.placeholder.value.slice(0,-2);
         preenchimentoForm.push(1);
         var porcentagemPreenchida = (preenchimentoForm.length/4)*100;
         ev.target.gtmPreenchido = true;     // propiedade de controle, arbitráriamente chamda de .gtmPreenchido, criado para esse campo alvo.
         //uma vez que ela é setada pra true, quando o evento invocar a função, a propiedade alvo já estará com o valor atribuido para true. Mesmo quando ela é "criada" novamente
-        console.log(porcentagemPreenchida);   
+        tracker.send('event', {
+            category: 'orçamento',
+            action: `preencheu ${porcentagemPreenchida}% do forms`,
+            label: 'formulário',
+            cd1: 'hard coded'
+          });   
       }
     })
   </script>
