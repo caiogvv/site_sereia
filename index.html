@@ -2716,7 +2716,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         //uma vez que ela é setada pra true, quando o evento invocar a função, a propiedade alvo já estará com o valor atribuido para true. Mesmo quando ela é "criada" novamente
         tracker.send('event', {
             category: 'orçamento',
-            action: `preencheu ${porcentagemPreenchida}% do forms`,
+            action: `preencheu ${porcentagemPreenchida}` + encodeURIComponent('% do forms'),
             label: 'formulário',
             cd1: 'hard coded'
           });   
