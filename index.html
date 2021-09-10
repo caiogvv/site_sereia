@@ -951,8 +951,9 @@
 
 //Envio das informações
   window["tracker"].send("pageview", {
-    category: 'inicio do fluxo',
-    label: 'chegou na página home'
+    category: 'início do fluxo',
+    label: 'chegou na página home',
+    cd1: 'hard coded'
   });
 </script>
 
@@ -2535,6 +2536,14 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
               $('#success > .alert-success')
                 .append('</div>');
 
+              // Tag de envio sucedido
+              tracker.send('event', {
+                cd1: 'hard coded',
+                category: 'orçamento',
+                action: 'submit',
+                label: 'submit success'
+              });
+
               //clear all fields
               $('#contactForm').trigger("reset");
             },
@@ -2547,6 +2556,14 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
               $('#success > .alert-danger').append('</div>');
               //clear all fields
               $('#contactForm').trigger("reset");
+
+              // Tag de envio falhado
+              tracker.send('event', {
+                cd1: 'hard coded',
+                category: 'orçamento',
+                action: 'submit',
+                label: 'submit fail'
+              });
             },
           });
         },
@@ -2602,6 +2619,13 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     window.setTimeout(function() {
       var element = document.getElementById('call-me-baby');
       element.style.right = '20px';
+      
+      // Tag phone view
+      tracker.send('event', {
+                cd1: 'hard coded',
+                category: 'telefone',
+                action: 'visualizou',
+              });
     }, Math.random() * 12000 + 5000);
   </script>
 
@@ -2614,7 +2638,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       tracker.send('event', {
         category: 'orçamento',
         action: 'click',
-        label: 'botão orçamento'
+        label: 'botão orçamento',
+        cd1: 'hard coded'
       })
     }, 
     {capture: false});
@@ -2636,7 +2661,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         tracker.send('event', {
           category: 'orçamento',
           action: 'visualizou form',
-          label: 'formulário' 
+          label: 'formulário',
+          cd1: 'hard coded' 
         });
 
         window.removeEventListener('scroll', viewForm);
@@ -2660,13 +2686,39 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           tracker.send('event', {
             category: 'orçamento',
             action: 'digitou em algum campo',
-            label: 'formulário'
+            label: 'formulário',
+            cd1: 'hard coded'
           });
           window.removeEventListener('change', typeInForm);
         }
       }
     }
   </script>
+
+
+  <!-- Tag event % preenchimento do form -->
+
+  <script>
+    let form = document.querySelector('#contactForm');
+    let preenchimentoForm = [];
+
+    form.addEventListener('change', (ev) =>  { 
+      if(ev.target.value && ev.target.gtmPreenchido) {
+        return
+      }  // é possível criar uma propiedade da variavel (se ela já existir) dentro do if e atrelar ela ao campo alvo que disparou o evento. Como não foi atribuido nada a ela, ela é undefined
+    
+    
+      if(!ev.target.gtmPreenchido) {    
+        var campo = ev.target.attributes.placeholder.value.slice(0,-2);
+        preenchimentoForm.push(1);
+        var porcentagemPreenchida = (preenchimentoForm.length/4)*100;
+        ev.target.gtmPreenchido = true;     // propiedade de controle, arbitráriamente chamda de .gtmPreenchido, criado para esse campo alvo.
+        //uma vez que ela é setada pra true, quando o evento invocar a função, a propiedade alvo já estará com o valor atribuido para true. Mesmo quando ela é "criada" novamente
+        console.log(porcentagemPreenchida);   
+      }
+    })
+  </script>
+
 
 </body>
 
