@@ -949,11 +949,19 @@
 //https://script.google.com/macros/s/AKfycbx2j5RlkSq3TLAm9TofJE0pepcaE1kYF8ZwXJualAg/dev
 
 
+//caso estivesse garantido que o link de entrada teria um /?source=redesocial
+function getURLSource () {
+  let sourceOfURL = document.URL.split("?")[1].split("=")[1];
+  debugger
+}
+
+
 //Envio das informações
   window["tracker"].send("pageview", {
     category: 'início do fluxo',
     label: 'chegou na página home',
-    cd1: 'hard coded'
+    cd1: 'hard coded',
+    cd2: getURLSource()
   });
 </script>
 
@@ -2678,6 +2686,9 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
     function typeInForm() {
       let form = document.querySelectorAll('.form-group');
+      //form[0].children[0] chega no elemento
+      //form[1].firstElementChild  chega no elemento também
+      //form[2].firstChild  chega em #text, obj com vários métodos
       
       for (let i = 0; i < form.length; i++) {
         let formField = form[i]
@@ -2773,6 +2784,68 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
     /*Obs.: Existe a mínima chance do usuario disparar dados duplicados se ele clicar no elemento 
     <a> e, logo em seguida, clicar no elemento <i> do mesmo botão de rede social.  
+    */
+
+    /*
+      evt.target; // Retornar o elemento/exato local que foi cliclado.
+      node.childElementCount; //Conta o número de filhes de um objeto node (document, element)
+      element.children; //Retorna um HTMLCollection que contem todes filhes do elemento chamado. Vc pode acessar cada filhe pelo indice, usando element.children[2] 
+      
+    */
+  </script>
+
+
+  <!-- Tag event click menu superior -->
+
+  <script>
+    let ulMenuSuperior = document.querySelector('.nav.navbar-nav.navbar-right');
+
+    let listOfLinks = Array.from(ulMenuSuperior.children);
+    
+    for (let i = 1; i < listOfLinks.length; i++) {
+      let anchorOfMenu = listOfLinks[i].firstElementChild
+      
+      anchorOfMenu.addEventListener('click', (evt) => {
+        let textOfAnchor = "botão " + anchorOfMenu.innerText.toLowerCase();
+        
+        if (!evt.target.gtmPreenchido) {
+          tracker.send('event', {
+            category: 'menu superior',
+            action: 'click',
+            label: textOfAnchor,
+            cd1: 'hard coded'
+          })
+
+          evt.target.gtmPreenchido = true;
+        }
+      });
+    }
+  </script>
+
+
+  <!-- Tag event click porfólio -->
+
+  <script>
+    let divPortfolio = document.querySelectorAll('div.col-md-4.col-sm-6.portfolio-item');
+    
+    for (let i = 0; i < divPortfolio.length; i++) {
+      let clickAreaOfPortfolio = divPortfolio[i].firstElementChild.firstElementChild;
+      let nameOfPortfolio = divPortfolio[i].lastElementChild.firstElementChild.innerText;
+     
+      clickAreaOfPortfolio.addEventListener('click', (evt) => {
+        if (!evt.target.gtmPreenchido) {
+          tracker.send('event', {
+          category: 'portfolio',
+          action: 'click',
+          label: nameOfPortfolio,
+          cd1: 'hard coded'
+          });
+        }
+      });
+    }
+
+    /*
+    Obs.: o click com o botão esquerdo do mouse é capturado e o hit é enviado com sucesso, contudo, se clicarmos com o botão direito e ir em 'abrir link em uma nova guia', o hit não funciona
     */
   </script>
 
