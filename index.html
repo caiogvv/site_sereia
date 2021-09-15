@@ -2720,8 +2720,60 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             label: 'formulário',
             cd1: 'hard coded'
           });   
+          // setTimeout(function(){ ev.target.gtmPreenchido = false }, 0);  - Trocar o estado da variavel de controle "duretante o request"
       }
     })
+  </script>
+
+
+  <!-- Tag event click social networks -->
+  
+  <script>
+    //seleciona todas as listas ul com as classes list-inline social buttons
+    let ulSocialButtonsList = document.querySelectorAll('ul.list-inline.social-buttons');
+
+    //adicionando um event listener para cada lista de redes sociais.
+    ulSocialButtonsList.forEach((list) => {list.addEventListener('click', (evt) => {
+
+      let divTeamMember = document.querySelectorAll('.team-member');
+      
+      // For loop para verificar todas as <ul> sociais e encontrar qual delas foi clicada.
+      for (let i = 0; i < ulSocialButtonsList.length; i++) {
+        let selectedUl = ulSocialButtonsList[i];
+        let selectedDiv = divTeamMember[i];
+
+        for (let num = 0; num < selectedUl.childElementCount; num++) {
+          let anchorOfSocial = selectedUl.children[num].firstElementChild;
+          let iconOfSocial = anchorOfSocial.firstElementChild;
+
+          if (evt.target == anchorOfSocial && !evt.target.gtmPreenchido || evt.target == iconOfSocial && !evt.target.gtmPreenchido) {
+            let socialNetwork = iconOfSocial.getAttribute('class').split(' ')[1].split('-')[1];
+
+            //no caso das redes sociais do Sereia, selectedDiv retornará como undefined e, pra esse caso especifico, tratamos no If Else
+            if (selectedDiv != undefined) {
+              var socialOwner = selectedDiv.children[1].innerText;
+            }
+            else { var socialOwner = "Sereia";}
+            
+            let socialMedia = socialNetwork + " de " + socialOwner;
+
+            tracker.send('event', {
+              category: 'social',
+              action: 'click',
+              label: socialMedia,
+              cd1: 'hard coded'
+            })
+            evt.target.gtmPreenchido = true;
+          }
+        }
+      }
+
+    })
+  });
+
+    /*Obs.: Existe a mínima chance do usuario disparar dados duplicados se ele clicar no elemento 
+    <a> e, logo em seguida, clicar no elemento <i> do mesmo botão de rede social.  
+    */
   </script>
 
 
