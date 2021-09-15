@@ -951,7 +951,7 @@
 
 //caso estivesse garantido que o link de entrada teria um /?source=redesocial
 
-  let sourceOfURL = document.URL.split("?")[1].split("=")[1];
+//let sourceOfURL = document.URL.split("?")[1].split("=")[1] ;
 
 
 
@@ -960,7 +960,7 @@
     category: 'início do fluxo',
     label: 'chegou na página home',
     cd1: 'hard coded',
-    cd2: sourceOfURL
+    //cd2: sourceOfURL
   });
 </script>
 
@@ -2685,9 +2685,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
     function typeInForm() {
       let form = document.querySelectorAll('.form-group');
-      //form[0].children[0] chega no elemento
-      //form[1].firstElementChild  chega no elemento também
-      //form[2].firstChild  chega em #text, obj com vários métodos
       
       for (let i = 0; i < form.length; i++) {
         let formField = form[i]
@@ -2715,8 +2712,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     form.addEventListener('change', (ev) =>  { 
       if(ev.target.value && ev.target.gtmPreenchido) {
         return
-      }  // é possível criar uma propiedade da variavel (se ela já existir) dentro do if e atrelar ela ao campo alvo que disparou o evento. Como não foi atribuido nada a ela, ela é undefined
-    
+      }  
     
       if(!ev.target.gtmPreenchido && ev.target.value.length >= 3) {    
         var campo = ev.target.attributes.placeholder.value.slice(0,-2);
@@ -2783,13 +2779,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
     /*Obs.: Existe a mínima chance do usuario disparar dados duplicados se ele clicar no elemento 
     <a> e, logo em seguida, clicar no elemento <i> do mesmo botão de rede social.  
-    */
-
-    /*
-      evt.target; // Retornar o elemento/exato local que foi cliclado.
-      node.childElementCount; //Conta o número de filhes de um objeto node (document, element)
-      element.children; //Retorna um HTMLCollection que contem todes filhes do elemento chamado. Vc pode acessar cada filhe pelo indice, usando element.children[2] 
-      
     */
   </script>
 
