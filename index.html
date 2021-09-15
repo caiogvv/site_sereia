@@ -950,10 +950,9 @@
 
 
 //caso estivesse garantido que o link de entrada teria um /?source=redesocial
-function getURLSource () {
-  let sourceOfURL = document.URL.split("?")[1].split("=")[1];
-  debugger
-}
+
+  const sourceOfURL = document.URL.split("?")[1].split("=")[1];
+
 
 
 //Envio das informações
@@ -961,7 +960,7 @@ function getURLSource () {
     category: 'início do fluxo',
     label: 'chegou na página home',
     cd1: 'hard coded',
-    cd2: getURLSource()
+    cd2: sourceOfURL
   });
 </script>
 
